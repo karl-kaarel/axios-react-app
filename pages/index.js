@@ -28,6 +28,11 @@ const Home = () => {
     setPosts(postsClone);
   };
 
+  const handleDelete = async post =>{
+    await axios.delete(apiEndPoint + '/' + post.id + post);
+    setPosts(posts.filter((p) => p.id !== post.id));
+  };
+
   return (<>
   <div className='container'>
     <h2>Meil on {posts.length} postitust</h2>
@@ -45,7 +50,7 @@ const Home = () => {
           <tr key={post.id}>
             <td>{post.title}</td>
             <td><button onClick={()=> handleUpdate(post)} className="btn btn-info btn-sm">Uuenda</button></td>
-            <td><button className="btn btn-danger btn-sm">Kustuta</button></td>
+            <td><button onClick={()=> handleDelete(post)} className="btn btn-danger btn-sm">Kustuta</button></td>
           </tr>
         ))}
       </tbody>
