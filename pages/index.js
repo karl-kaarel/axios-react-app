@@ -17,7 +17,16 @@ const Home = () => {
     const post = {title:'tegime uue postituse', body:'new'};
     await axios.post(apiEndPoint, post);
     setPosts([post, ...posts]);
-  }
+  };
+
+  const handleUpdate = async post =>{
+    post.title = 'Uuendatud postitus';
+    await axios.put(apiEndPoint + '/' + post.id);
+    const postsClone = [...posts];
+    const index = postsClone.indexOf(post);
+    postsClone[index] = {...post};
+    setPosts(postsClone);
+  };
 
   return (<>
   <div className='container'>
@@ -35,7 +44,7 @@ const Home = () => {
         {posts.map((post =>
           <tr key={post.id}>
             <td>{post.title}</td>
-            <td><button className="btn btn-info btn-sm">Uuenda</button></td>
+            <td><button onClick={()=> handleUpdate(post)} className="btn btn-info btn-sm">Uuenda</button></td>
             <td><button className="btn btn-danger btn-sm">Kustuta</button></td>
           </tr>
         ))}
