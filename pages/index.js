@@ -13,9 +13,16 @@ const Home = () => {
     getPosts();
   },[]);
 
+  const addPost = async () =>{
+    const post = {title:'tegime uue postituse', body:'new'};
+    await axios.post(apiEndPoint, post);
+    setPosts([post, ...posts]);
+  }
+
   return (<>
   <div className='container'>
     <h2>Meil on {posts.length} postitust</h2>
+    <button onClick={addPost} className="btn btn-primary">Lisa postitus</button>
     <table className="table">
       <thead>
         <tr>
@@ -28,8 +35,8 @@ const Home = () => {
         {posts.map((post =>
           <tr key={post.id}>
             <td>{post.title}</td>
-            <td><button class="btn btn-info btn-sm">Update</button></td>
-            <td><button class="btn btn-danger btn-sm">Delete</button></td>
+            <td><button className="btn btn-info btn-sm">Uuenda</button></td>
+            <td><button className="btn btn-danger btn-sm">Kustuta</button></td>
           </tr>
         ))}
       </tbody>
